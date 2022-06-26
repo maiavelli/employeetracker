@@ -1,0 +1,22 @@
+{
+    "name": "employee-tracker",
+    "version": "1.0.0",
+    "description": "A program that allows you to update an employee database using mySQL and the command line.",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "repository": {
+    "type": "git",
+    "url": "https://github.com/maiavelli/employeetracker"
+    },
+    "author": "Maia Davis",
+    "license": "ISC",
+    "dependencies": {
+        "console.table": "^0.10.0",
+        "dotenv": "^8.2.0",
+        "inquirer": "^7.0.4",
+        "mysql": "^2.18.1",
+        "sequelize": "^6.3.5"
+    }
+}
