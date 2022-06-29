@@ -4,19 +4,18 @@ CREATE DATABASE employee_db;
 USE employee_db;
 
 CREATE TABLE department (
-    id: INT,
-    title: VARCHAR(30)
-    PRIMARY KEY (id)
+    id: INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title: VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE role (
-    id: INT,
+    id: INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title: VARCHAR(30),
     salary: DECIMAL,
     department_id: INT
-    FOREIGN KEY (department_id),
-    REFERENCES department(id),
-    PRIMARY KEY (id)
+    FOREIGN KEY (department_id)
+        REFERENCES department(id)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE employee (
