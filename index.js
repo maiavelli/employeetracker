@@ -146,6 +146,7 @@ addDepartment = () => {
     ])
 
     .then(answer => {
+        //query department database and create array of departments to choose from
         const sql = `INSERT into department (title) VALUES (?)`;
         connection.query(sql, answer.addDept, (err, res) => {
             if (err) throw err;
@@ -156,6 +157,7 @@ addDepartment = () => {
 };
 
 addRole = () => {
+
     let departmentArray = [];
     let deptSql = `SELECT * FROM department`
 
@@ -210,7 +212,6 @@ addRole = () => {
                     return false;
                 }
             }
-
         }
     ])
 
@@ -224,3 +225,70 @@ addRole = () => {
         });
     });
 };
+
+addEmployee = () => {
+    let roleArray = [];
+    let roleSql = `SELECT * FROM role`
+
+    connection.query(roleSql, (err, res) => {
+        if (err) throw err;
+
+        res.forEach(role => {
+            let roleQuery = {
+                title: role.title,
+                value: role.id
+            }
+        roleArray.push(roleQuery);
+        })
+    });
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'firstName',
+            message: 'What is the first name of the new employee?',
+            validate: addFirstName => {
+                if (addFirstName) {
+                    return true;
+                } else {
+                    console.log('Please enter a first name!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'lastName',
+            message: 'What is the last name of this employee?',
+            validate: addLastName => {
+                if (addLastName) {
+                    return true;
+                } else {
+                    console.log('Please enter a last name!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'list',
+            name: 'role',
+            choices: roleArray,
+            message: "Which is this employee's role?",
+            validate: roleChoice => {
+                if (roleChoice) {
+                    return true;
+                } else {
+                    console.log('Please select a role!');
+                    return false;
+                }
+            }
+        }
+    ])
+    .then(answer => {
+        const sql = `INSERT INTO EMPLOYEE (first_name, last_name, role_id) VALUES (?)`;
+        connection.query(sql, [[answer.firstName, answer.lastName, answer.role]], (err, res) => {
+            if (err) throw err;
+            console.log(`Successfully added ${answer.firstName} ${answer.lastName} as role ${answer.role}`);
+            showEmployees();
+        });
+    });
+}
