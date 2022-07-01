@@ -37,10 +37,6 @@ connection.connect((err) => {
     });
 });
 
-    
-    
-
-
 
 //prompt menu 
 const promptUser = () => {
