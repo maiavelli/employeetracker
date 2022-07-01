@@ -7,8 +7,8 @@
         "test": "jest"
     },
     "repository": {
-    "type": "git",
-    "url": "https://github.com/maiavelli/employeetracker"
+        "type": "git",
+        "url": "https://github.com/maiavelli/employeetracker"
     },
     "author": "Maia Davis",
     "license": "ISC",
@@ -16,7 +16,8 @@
         "console.table": "^0.10.0",
         "dotenv": "^8.2.0",
         "inquirer": "^7.0.4",
-        "mysql": "^2.18.1",
+        "mysql2": "^2.1.0",
+        "package.json": "^2.0.1",
         "sequelize": "^6.3.5"
     }
 }

@@ -95,6 +95,15 @@ const promptUser = () => {
         if (choices === 'exit the application') {
             connection.end();
         };
-    })
+    });
+};
+
+showDepartments = () => {
+    console.log('here are the current departments...')
+    const sql = `SELECT department.id AS id, deparment.name AS department FROM department`;
+
+    connection.promise().query(sql, (err, rows) => {
+        if (err) throw (err);
+        console.table(rows);
     })
 }
