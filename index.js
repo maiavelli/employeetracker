@@ -19,9 +19,9 @@ require('dotenv').config();
 // connect to database
 const connection = mysql.createConnection( {
     host: 'localhost',
-    user: process.env.DB_USER,
+    user: 'root',
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME  
+    database: 'employee_db' 
 });
 
 connection.connect((err) => {
@@ -47,7 +47,8 @@ const promptUser = () => {
             message: 'What would you like to do?',
             choices: [
                         'view all departments', 
-                        'view all employees', 
+                        'view all roles',
+                        'view all employees',
                         'add a department', 
                         'add a role', 
                         'add an employee', 
@@ -62,14 +63,14 @@ const promptUser = () => {
 
         if (choices === 'view all departments') {
             showDepartments();
+        } 
+        
+        if (choices === 'view all roles') {
+            showRoles();
         }
 
         if (choices === 'view all employees') {
             showEmployees();
-        }
-
-        if (choices === 'view all roles') {
-            showRoles();
         }
 
         if (choices === 'add a department') {
@@ -95,11 +96,31 @@ const promptUser = () => {
 };
 
 showDepartments = () => {
-    console.log('here are the current departments...')
-    const sql = `SELECT department.id AS id, deparment.name AS department FROM department`;
+    const sql = `SELECT * FROM department`;
 
-    connection.promise().query(sql, (err, rows) => {
+    connection.query(sql, (err, rows) => {
         if (err) throw (err);
         console.table(rows);
-    })
-}
+        promptUser();
+    });
+};
+
+showRoles = () => {
+    const sql = `SELECT * FROM role`;
+
+    connection.query(sql, (err, rows) => {
+        if (err) throw (err);
+        console.table(rows);
+        promptUser();
+    });
+};
+
+showEmployees = () => {
+    const sql = `SELECT * FROM employee`;
+
+    connection.query(sql, (err, rows) => {
+        if (err) throw (err);
+        console.table(rows);
+        promptUser();
+    });
+};
