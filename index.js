@@ -12,6 +12,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
+const figlet = require('figlet');
 
 require('dotenv').config();
 
@@ -23,24 +24,23 @@ const connection = mysql.createConnection( {
     database: process.env.DB_NAME  
 });
 
-connection.connect(err => {
+connection.connect((err) => {
     if (err) throw err;
-    console.log('connected as id ' + connection.threadId);
-    welcome();
+// function to display welcome image after connection is established
+    figlet.text('Employee Tracker', function(err, data) {
+            if (err) {
+                console.log('Something went wrong...');
+            } else {
+                console.log(data);
+        }
+        promptUser();
+    });
 });
 
-// function to display welcome image after connection is established
-welcome = () => {
-    console.log(" ______                 _                         __  __ " )                              
-    console.log("|  ____|               | |                       |  \/  |" )                               
-    console.log("| |__   _ __ ___  _ __ | | ___  _   _  ___  ___  | \  / | __ _ _ __   __ _  __ _  ___ _ __") 
-    console.log("|  __| | '_ ` _ \| '_ \| |/ _ \| | | |/ _ \/ _ \ | |\/| |/ _` | '_ \ / _` |/ _` |/ _ \ '__|")
-    console.log("|  ____| | | | | |  _) | | (_) | |_| |  __/  __/ | |  | | (_| | | | | (_| | (_| |  __/ |")   
-    console.log("|______|_| |_| |_| .__/|_|\___/ \__, |\___|\___| |_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|")   
-    console.log("                 | |             __/ |                                      __/ |")         
-    console.log("                 |_|            |___/                                      |___/")
-    promptUser();
-};
+    
+    
+
+
 
 //prompt menu 
 const promptUser = () => {
