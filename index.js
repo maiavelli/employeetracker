@@ -58,6 +58,7 @@ const promptUser = () => {
         }
     ])
 
+// determine which function to run based on user choice
     .then((answers) => {
         const { choices } = answers;
 
@@ -95,6 +96,7 @@ const promptUser = () => {
     });
 };
 
+// functions to display tables
 showDepartments = () => {
     const sql = `SELECT * FROM department`;
 
@@ -125,11 +127,12 @@ showEmployees = () => {
     });
 };
 
+// functions to add data to tables 
 addDepartment = () => {
     inquirer.prompt([
         {
             type: 'input',
-            name: 'addDept',
+            name: 'dept',
             message: 'What is the name of the department you would like to add?',
             validate: addDept => {
                 if (addDept) {
@@ -146,9 +149,78 @@ addDepartment = () => {
         const sql = `INSERT into department (title) VALUES (?)`;
         connection.query(sql, answer.addDept, (err, res) => {
             if (err) throw err;
-            console.log(`Successfully added ${answer.addDept} to departments!`);
+            console.log(`Successfully added ${answer.dept} to departments!`);
             showDepartments();
         });
     });
 };
 
+addRole = () => {
+    let departmentArray = [];
+    let deptSql = `SELECT * FROM department`
+
+    connection.query(deptSql, (err, res) => {
+        if (err) throw err;
+
+        res.forEach(dept => {
+            let deptQuery = {
+                title: dept.title,
+                value: dept.id
+            }
+        departmentArray.push(deptQuery);
+    });
+
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'title',
+            message: 'What is the name of the role you would like to add?',
+            validate: addRole => {
+                if (addRole) {
+                    return true;
+                } else {
+                    console.log('Please enter a role!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the salary for this role?',
+            validate: addSalary => {
+                if (addSalary) {
+                    return true;
+                } else {
+                    console.log('Please enter a salary for this role!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'list',
+            name: 'dept',
+            choices: departmentArray,
+            message: 'Which department is this role in?',
+            validate: deptChoice => {
+                if (deptChoice) {
+                    return true;
+                } else {
+                    console.log('Please select a department!');
+                    return false;
+                }
+            }
+
+        }
+    ])
+
+    .then(answer => {
+        const sql = `INSERT INTO ROLE (title, salary, department_id) VALUES (?)`;
+        connection.query(sql, [[answer.title, answer.salary, answer.dept]], (err, res) => {
+            if (err) throw err;
+            console.log(`Successfully added ${answer.title} role at id ${answer.insertId}`);
+            showRoles();
+            });
+        });
+    });
+};
