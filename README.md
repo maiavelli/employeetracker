@@ -3,6 +3,26 @@
 
 An employee database management system that uses command line, node.js, and mySQL to allow you to view and manage the employees, departments, and roles in your company. 
 
+## Table of Contents
+-[Installation](#installation)
+
+-[Usage](#usage)
+
+-[Demo](#demo)
+
+-[Tests](#tests)
+
+-[Questions](#questions)
+
+-[License](#license)
+
+## Installation
+To install this package, please make sure you have node.js installed and run the follow code snippet in your command line: 
+
+```md
+npm install package.json
+```
+
 ## Usage 
 
 To use this application, first clone this repository and create a `.env` file using the format in the `.envEXAMPLE` with your mySQL credentials. You may also edit `seeds.sql` with your company data, or you may enter your data via the application. 
@@ -10,10 +30,10 @@ To use this application, first clone this repository and create a `.env` file us
 Then, log into mySQL on your command line and run the following code: 
 
 ```md
-source /db/schema.sql
+source /db/schema.sql;
 ```
 
-If you decided to create a seed file, run the same code again afterward, with `/db/seeds.sql` as the source. 
+If you decided to create a seed file, run the same code again afterward, with `/db/seeds.sql;` as the source. 
 
 Next, exit mySQL, and run the following command: 
 
