@@ -146,9 +146,8 @@ addDepartment = () => {
     ])
 
     .then(answer => {
-        //query department database and create array of departments to choose from
-        const sql = `INSERT into department (title) VALUES (?)`;
-        connection.query(sql, answer.addDept, (err, res) => {
+        const sql = `INSERT INTO DEPARTMENT (title) VALUES (?)`;
+        connection.query(sql, answer.dept, (err, res) => {
             if (err) throw err;
             console.log(`Successfully added ${answer.dept} to departments!`);
             showDepartments();
@@ -157,7 +156,7 @@ addDepartment = () => {
 };
 
 addRole = () => {
-
+    //query department database and create array of departments to choose from
     let departmentArray = [];
     const deptSql = `SELECT * FROM department`
 
